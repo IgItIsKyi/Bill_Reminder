@@ -1,0 +1,6 @@
+{
+  "Name": "Bill_Reminder",
+  "ProjectType": "Process",
+  "Description": "Takes in an .xlsx (Excel) file and reads each bill and pay date, checks if the bill is within 3 days and sends an email every day for the next 3 days to make sure we transfer it.",
+  "MainFile": "Main.xaml"
+}
