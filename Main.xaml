@@ -121,9 +121,12 @@
       <AssemblyReference>System.Linq.Parallel</AssemblyReference>
       <AssemblyReference>System.Linq.Queryable</AssemblyReference>
       <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>System.CodeDom</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic.Forms</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic.Core</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="1409.2,3279.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="1409.2,4053.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="dt_Config" />
       <Variable x:TypeArguments="sd:DataTable" Name="dt_Bills" />
@@ -152,29 +155,30 @@
       </Assign.Value>
     </Assign>
     <ui:ReadRange Range="{x:Null}" WorkbookPathResource="{x:Null}" AddHeaders="True" DataTable="[dt_Bills]" DisplayName="Read Bills Workbook" sap:VirtualizedContainerService.HintSize="486.4,120" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="Sheet1" WorkbookPath="[&quot;C:\Users\&quot;+Environment.UserName+&quot;\Downloads\All-Bills.xlsx&quot;]" />
-    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dt_Bills]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="486.4,1988" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dt_Bills]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="486.4,2762.4" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
       <ui:ForEachRow.Body>
         <ActivityAction x:TypeArguments="sd:DataRow">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="484.8,1806.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="484.8,2580.8" sap2010:WorkflowViewState.IdRef="Sequence_2">
             <Sequence.Variables>
-              <Variable x:TypeArguments="s:DateTime" Default="2025-12-25" Name="billDate" />
+              <Variable x:TypeArguments="s:DateTime" Name="billDate" />
             </Sequence.Variables>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <If Condition="[Cint(CurrentRow.Item(&quot;Date&quot;).ToString) &lt;= DateTime.Now.Day]" DisplayName="If - Use next Months date if bill passed" sap:VirtualizedContainerService.HintSize="451.2,597.6" sap2010:WorkflowViewState.IdRef="If_3">
+            <If Condition="[Cint(CurrentRow.Item(&quot;Date&quot;).ToString) &gt;= DateTime.Now.Day]" DisplayName="If - Use next Months date if bill passed" sap:VirtualizedContainerService.HintSize="451.2,966.4" sap2010:WorkflowViewState.IdRef="If_3">
               <If.Then>
-                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="449.6,229.6" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="449.6,412" sap2010:WorkflowViewState.IdRef="Sequence_8">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="416,178.4" sap2010:WorkflowViewState.IdRef="LogMessage_9" Message="[&quot;Bill date: &quot; + CurrentRow.Item(&quot;Date&quot;).ToString + &quot;Today's date: &quot; + DateTime.Now.Day.ToString]" />
                   <Assign DisplayName="Assign - billDate" sap:VirtualizedContainerService.HintSize="416,169.6" sap2010:WorkflowViewState.IdRef="Assign_4">
                     <Assign.To>
                       <OutArgument x:TypeArguments="s:DateTime">[billDate]</OutArgument>
@@ -192,12 +196,13 @@
                 </Sequence>
               </If.Then>
               <If.Else>
-                <Sequence DisplayName="Else - Use next Month" sap:VirtualizedContainerService.HintSize="449.6,229.6" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                <Sequence DisplayName="Else - Use next Month" sap:VirtualizedContainerService.HintSize="449.6,412" sap2010:WorkflowViewState.IdRef="Sequence_9">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="416,178.4" sap2010:WorkflowViewState.IdRef="LogMessage_10" Message="[&quot;Bill date: &quot; + CurrentRow.Item(&quot;Date&quot;).ToString + &quot;Today's date: &quot; + DateTime.Now.Day.ToString]" />
                   <Assign DisplayName="Assign - billDate" sap:VirtualizedContainerService.HintSize="416,169.6" sap2010:WorkflowViewState.IdRef="Assign_5">
                     <Assign.To>
                       <OutArgument x:TypeArguments="s:DateTime">[billDate]</OutArgument>
@@ -215,9 +220,14 @@
                 </Sequence>
               </If.Else>
             </If>
-            <If Condition="[DateTime.Now.Subtract(billDate).Days &lt;= 3]" DisplayName="If - Bill is within 3 days" sap:VirtualizedContainerService.HintSize="451.2,1144.8" sap2010:WorkflowViewState.IdRef="If_2">
+            <If sap2010:Annotation.AnnotationText="billDate.Subtract(DateTime.Now).Days &gt;= 0 and billDate.Subtract(DateTime.Now).Days &lt;= 3" Condition="[billDate.Subtract(DateTime.Now).Days &gt;= 0 and billDate.Subtract(DateTime.Now).Days &lt;= 3]" DisplayName="If - Bill is within 3 days" sap:VirtualizedContainerService.HintSize="451.2,1550.4" sap2010:WorkflowViewState.IdRef="If_2">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
               <If.Then>
-                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="449.6,777.6" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="449.6,960" sap2010:WorkflowViewState.IdRef="Sequence_5">
                   <Sequence.Variables>
                     <Variable x:TypeArguments="s:String[]" Name="emailRecipient" />
                   </Sequence.Variables>
@@ -226,8 +236,9 @@
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="416,178.4" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;Amount of days til Bill Date: &quot; + billDate.Subtract(DateTime.Now).Days.ToString]" />
                   <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="416,178.4" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Bill within 3 Days...&quot;]" />
-                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="CreateEmail - Invoke Workflow File (SubProcesses\CreateEmail.xaml)" sap:VirtualizedContainerService.HintSize="416,180.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="SubProcesses\CreateEmail.xaml">
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="CreateEmail - Invoke Workflow File (SubProcesses\CreateEmail.xaml)" sap:VirtualizedContainerService.HintSize="416,184.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="SubProcesses\CreateEmail.xaml">
                     <ui:InvokeWorkflowFile.Arguments>
                       <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[Config]</InArgument>
                       <InArgument x:TypeArguments="x:String" x:Key="in_BillName">[CurrentRow.Item("Bill").ToString.Trim]</InArgument>
@@ -255,13 +266,14 @@
                 </Sequence>
               </If.Then>
               <If.Else>
-                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="449.6,233.6" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="449.6,412" sap2010:WorkflowViewState.IdRef="Sequence_6">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="416,169.6" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Bill not within 3 days...&quot;]" />
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="416,178.4" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;Amount of days til Bill Date: &quot; + billDate.Subtract(DateTime.Now).Days.ToString + vbCrLf + &quot;Bill Date: &quot; + billDate.ToString(&quot;MM-dd-yyyy&quot;)]" />
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="416,169.6" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Bill &quot;+ CurrentRow.Item(&quot;Bill&quot;).ToString + &quot; is not within 3 days...&quot;]" />
                 </Sequence>
               </If.Else>
             </If>
