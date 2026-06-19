@@ -1,12 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ucas="clr-namespace:UiPath.Core.Activities.Storage;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <x:Members>
-    <x:Property Name="emailSubject" Type="InOutArgument(x:String)" />
-    <x:Property Name="emailBody" Type="InOutArgument(x:String)" />
-  </x:Members>
-  <VisualBasic.Settings>
-    <x:Null />
-  </VisualBasic.Settings>
-  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" VisualBasic.Settings="{x:Null}" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>GlobalConstantsNamespace</x:String>
@@ -121,195 +113,73 @@
       <AssemblyReference>WindowsBase</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="1598.8000000000002,5031.2" sap2010:WorkflowViewState.IdRef="Sequence_10">
+  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="719.6,2155.2" sap2010:WorkflowViewState.IdRef="Sequence_10">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="dt_Config" />
       <Variable x:TypeArguments="sd:DataTable" Name="dt_Bills" />
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="Config" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dt_dueBills" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="521.6,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Bill Reminder Process Starting...&quot;]" />
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ClearDownloadsFolder - Invoke Workflow File (SubProcesses\ClearDownloadsFolder.xaml)" sap:VirtualizedContainerService.HintSize="521.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="SubProcesses\ClearDownloadsFolder.xaml">
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="486.4,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Bill Reminder Process Starting...&quot;]" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ClearDownloadsFolder - Invoke Workflow File (SubProcesses\ClearDownloadsFolder.xaml)" sap:VirtualizedContainerService.HintSize="486.4,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="SubProcesses\ClearDownloadsFolder.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <scg:Dictionary x:TypeArguments="x:String, Argument" />
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ucas:DownloadStorageFile TimeoutMS="{x:Null}" Destination="[&quot;C:\Users\&quot;+Environment.UserName+&quot;\Downloads\All-Bills.xlsx&quot;]" DisplayName="Download Storage File" sap:VirtualizedContainerService.HintSize="521.6,166.4" sap2010:WorkflowViewState.IdRef="DownloadStorageFile_1" Path="\All-Bills.xlsx" StorageBucketName="Bill_Reminder" />
-    <ucas:DownloadStorageFile TimeoutMS="{x:Null}" Destination="[&quot;C:\Users\&quot;+Environment.UserName+&quot;\Downloads\Config_Bill_Reminder.xlsx&quot;]" DisplayName="Download Storage File" sap:VirtualizedContainerService.HintSize="521.6,166.4" sap2010:WorkflowViewState.IdRef="DownloadStorageFile_2" Path="\Config_Bill_Reminder.xlsx" StorageBucketName="Bill_Reminder" />
-    <ui:ReadRange Range="{x:Null}" WorkbookPathResource="{x:Null}" AddHeaders="True" DataTable="[dt_Config]" DisplayName="Read Config Workbook" sap:VirtualizedContainerService.HintSize="521.6,120" sap2010:WorkflowViewState.IdRef="ReadRange_2" SheetName="Sheet1" WorkbookPath="[&quot;C:\Users\&quot;+Environment.UserName+&quot;\Downloads\Config_Bill_Reminder.xlsx&quot;]" />
-    <Assign sap:VirtualizedContainerService.HintSize="521.6,174.4" sap2010:WorkflowViewState.IdRef="Assign_2">
-      <Assign.To>
-        <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">[Config]</OutArgument>
-      </Assign.To>
-      <Assign.Value>
-        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">[dt_Config.AsEnumerable().ToDictionary(Function(r) r("Variable").ToString.Trim, function (r) r("Value").ToString.Trim)]</InArgument>
-      </Assign.Value>
-    </Assign>
-    <ui:ReadRange Range="{x:Null}" WorkbookPathResource="{x:Null}" AddHeaders="True" DataTable="[dt_Bills]" DisplayName="Read Bills Workbook" sap:VirtualizedContainerService.HintSize="521.6,120" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="Sheet1" WorkbookPath="[&quot;C:\Users\&quot;+Environment.UserName+&quot;\Downloads\All-Bills.xlsx&quot;]" />
-    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dt_Bills]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="521.6,3744.8" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="GetDueBills - Invoke Workflow File (SubProcesses\GetDueBills.xaml)" sap:VirtualizedContainerService.HintSize="486.4,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="SubProcesses\GetDueBills.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dueBillsDT">[dt_dueBills]</OutArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dt_dueBills]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="486.4,1440" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
       <ui:ForEachRow.Body>
         <ActivityAction x:TypeArguments="sd:DataRow">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="520,3563.2" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="484.8,1258.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
             <Sequence.Variables>
               <Variable x:TypeArguments="s:DateTime" Name="billDate" />
+              <Variable x:TypeArguments="ui:QueueItem" Name="currentTransactionItem" />
             </Sequence.Variables>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <If Condition="[Cint(CurrentRow.Item(&quot;Date&quot;).ToString) &gt;= DateTime.Now.Day]" DisplayName="If - Use next Months date if bill passed" sap:VirtualizedContainerService.HintSize="486.4,938.4" sap2010:WorkflowViewState.IdRef="If_3">
-              <If.Then>
-                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="449.6,400" sap2010:WorkflowViewState.IdRef="Sequence_8">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="416,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_9" Message="[&quot;Bill date: &quot; + CurrentRow.Item(&quot;Date&quot;).ToString + &quot;Today's date: &quot; + DateTime.Now.Day.ToString]" />
-                  <Assign DisplayName="Assign - billDate" sap:VirtualizedContainerService.HintSize="416,165.6" sap2010:WorkflowViewState.IdRef="Assign_4">
-                    <Assign.To>
-                      <OutArgument x:TypeArguments="s:DateTime">[billDate]</OutArgument>
-                    </Assign.To>
-                    <Assign.Value>
-                      <InArgument x:TypeArguments="s:DateTime">[Convert.ToDateTime(DateTime.Now.Month.ToString + "-" + CurrentRow.Item("Date").ToString +"-"+ DateTime.Now.Year.ToString)]</InArgument>
-                    </Assign.Value>
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </Assign>
-                </Sequence>
-              </If.Then>
-              <If.Else>
-                <Sequence DisplayName="Else - Use next Month" sap:VirtualizedContainerService.HintSize="449.6,400" sap2010:WorkflowViewState.IdRef="Sequence_9">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="416,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_10" Message="[&quot;Bill date: &quot; + CurrentRow.Item(&quot;Date&quot;).ToString + &quot;Today's date: &quot; + DateTime.Now.Day.ToString]" />
-                  <Assign DisplayName="Assign - billDate" sap:VirtualizedContainerService.HintSize="416,165.6" sap2010:WorkflowViewState.IdRef="Assign_5">
-                    <Assign.To>
-                      <OutArgument x:TypeArguments="s:DateTime">[billDate]</OutArgument>
-                    </Assign.To>
-                    <Assign.Value>
-                      <InArgument x:TypeArguments="s:DateTime">[Convert.ToDateTime((DateTime.Now.AddMonths(1).Month).ToString + "-" + CurrentRow.Item("Date").ToString +"-"+ DateTime.Now.Year.ToString)]</InArgument>
-                    </Assign.Value>
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </Assign>
-                </Sequence>
-              </If.Else>
-            </If>
-            <If sap2010:Annotation.AnnotationText="billDate.Subtract(DateTime.Now).Days &gt;= 0 and billDate.Subtract(DateTime.Now).Days &lt;= 3" Condition="[billDate.Subtract(DateTime.Now).Days &gt;= 0 and billDate.Subtract(DateTime.Now).Days &lt;= 3]" DisplayName="If - Bill is within 3 days" sap:VirtualizedContainerService.HintSize="486.4,2564.8" sap2010:WorkflowViewState.IdRef="If_2">
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
-              <If.Then>
-                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="484.8,1990.4" sap2010:WorkflowViewState.IdRef="Sequence_5">
+            <ui:AddTransactionItem ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Add Transaction Item" FolderPath="Live/Bill_Reminder" sap:VirtualizedContainerService.HintSize="451.2,175.2" sap2010:WorkflowViewState.IdRef="AddTransactionItem_1" QueueType="EmailsSent" Reference="[CurrentRow.Item(&quot;BillName&quot;).ToString.Trim+CurrentRow.Item(&quot;username&quot;).ToString.Trim+&quot;_&quot;+Now.ToString(&quot;MM-dd-yyyy&quot;)]" TransactionItem="[currentTransactionItem]">
+              <ui:AddTransactionItem.TransactionInformation>
+                <scg:Dictionary x:TypeArguments="x:String, InArgument" />
+              </ui:AddTransactionItem.TransactionInformation>
+            </ui:AddTransactionItem>
+            <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="451.2,1023.2" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+              <TryCatch.Try>
+                <Sequence DisplayName="Try" sap:VirtualizedContainerService.HintSize="449.6,401.6" sap2010:WorkflowViewState.IdRef="Sequence_11">
                   <Sequence.Variables>
-                    <Variable x:TypeArguments="s:String[]" Name="emailRecipient" />
-                    <Variable x:TypeArguments="ui:QueueItem" Name="currentTransactionItem" />
+                    <Variable x:TypeArguments="x:String" Name="emailRecipient" />
                   </Sequence.Variables>
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:AddTransactionItem ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Add Transaction Item" FolderPath="Live/Bill_Reminder" sap:VirtualizedContainerService.HintSize="451.2,175.2" sap2010:WorkflowViewState.IdRef="AddTransactionItem_1" QueueType="EmailsSent" Reference="[CurrentRow.Item(&quot;Bill&quot;).ToString.Trim+&quot;_&quot;+Now.ToString(&quot;MM-dd-yyyy&quot;)]" TransactionItem="[currentTransactionItem]">
-                    <ui:AddTransactionItem.TransactionInformation>
-                      <scg:Dictionary x:TypeArguments="x:String, InArgument" />
-                    </ui:AddTransactionItem.TransactionInformation>
-                  </ui:AddTransactionItem>
-                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="451.2,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;Amount of days til Bill Date: &quot; + billDate.Subtract(DateTime.Now).Days.ToString]" />
-                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="451.2,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Bill within 3 Days...&quot;]" />
-                  <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="451.2,1240.8" sap2010:WorkflowViewState.IdRef="TryCatch_1">
-                    <TryCatch.Try>
-                      <Sequence DisplayName="Try" sap:VirtualizedContainerService.HintSize="449.6,577.6" sap2010:WorkflowViewState.IdRef="Sequence_11">
-                        <sap:WorkflowViewStateService.ViewState>
-                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                          </scg:Dictionary>
-                        </sap:WorkflowViewStateService.ViewState>
-                        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="CreateEmail - Invoke Workflow File (SubProcesses\CreateEmail.xaml)" sap:VirtualizedContainerService.HintSize="416,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="SubProcesses\CreateEmail.xaml">
-                          <ui:InvokeWorkflowFile.Arguments>
-                            <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[Config]</InArgument>
-                            <InArgument x:TypeArguments="x:String" x:Key="in_BillName">[CurrentRow.Item("Bill").ToString.Trim]</InArgument>
-                            <InArgument x:TypeArguments="x:String" x:Key="in_BillAmount">[CurrentRow.Item("Amount").ToString.Trim]</InArgument>
-                            <InArgument x:TypeArguments="x:String" x:Key="in_BillDate">[billDate.ToString("MM/dd/yyyy")]</InArgument>
-                            <OutArgument x:TypeArguments="x:String" x:Key="out_EmailBody">[emailBody]</OutArgument>
-                            <OutArgument x:TypeArguments="x:String" x:Key="out_EmailSubject">[emailSubject]</OutArgument>
-                          </ui:InvokeWorkflowFile.Arguments>
-                        </ui:InvokeWorkflowFile>
-                        <Assign sap:VirtualizedContainerService.HintSize="416,174.4" sap2010:WorkflowViewState.IdRef="Assign_3">
-                          <Assign.To>
-                            <OutArgument x:TypeArguments="s:String[]">[emailRecipient]</OutArgument>
-                          </Assign.To>
-                          <Assign.Value>
-                            <InArgument x:TypeArguments="s:String[]">[CurrentRow.Item("Owner").ToString.Split(","c)]</InArgument>
-                          </Assign.Value>
-                        </Assign>
-                        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SendEmail - Invoke Workflow File (SubProcesses\SendEmail.xaml)" sap:VirtualizedContainerService.HintSize="416,167.2" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="SubProcesses\SendEmail.xaml">
-                          <ui:InvokeWorkflowFile.Arguments>
-                            <InArgument x:TypeArguments="scg:IEnumerable(x:String)" x:Key="in_Owner">[emailRecipient]</InArgument>
-                            <InArgument x:TypeArguments="x:String" x:Key="in_EmailSubject">[emailSubject]</InArgument>
-                            <InArgument x:TypeArguments="x:String" x:Key="in_EmailBody">[emailBody]</InArgument>
-                          </ui:InvokeWorkflowFile.Arguments>
-                        </ui:InvokeWorkflowFile>
-                      </Sequence>
-                    </TryCatch.Try>
-                    <TryCatch.Catches>
-                      <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_1">
-                        <ActivityAction x:TypeArguments="s:Exception">
-                          <ActivityAction.Argument>
-                            <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
-                          </ActivityAction.Argument>
-                          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="449.6,400" sap2010:WorkflowViewState.IdRef="Sequence_12">
-                            <sap:WorkflowViewStateService.ViewState>
-                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                              </scg:Dictionary>
-                            </sap:WorkflowViewStateService.ViewState>
-                            <ui:SetTransactionStatus ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Set Transaction Status" ErrorType="Application" sap:VirtualizedContainerService.HintSize="416,226.4" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_2" Reason="[exception.Message]" Status="Failed" TransactionItem="[currentTransactionItem]">
-                              <ui:SetTransactionStatus.Analytics>
-                                <scg:Dictionary x:TypeArguments="x:String, InArgument" />
-                              </ui:SetTransactionStatus.Analytics>
-                              <ui:SetTransactionStatus.Output>
-                                <scg:Dictionary x:TypeArguments="x:String, InArgument" />
-                              </ui:SetTransactionStatus.Output>
-                            </ui:SetTransactionStatus>
-                            <Throw Exception="[New Exception(exception.message)]" sap:VirtualizedContainerService.HintSize="416,113.6" sap2010:WorkflowViewState.IdRef="Throw_1" />
-                          </Sequence>
-                        </ActivityAction>
-                      </Catch>
-                    </TryCatch.Catches>
-                    <TryCatch.Finally>
-                      <Sequence DisplayName="Finally" sap:VirtualizedContainerService.HintSize="449.6,89.6" sap2010:WorkflowViewState.IdRef="Sequence_13">
-                        <sap:WorkflowViewStateService.ViewState>
-                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                          </scg:Dictionary>
-                        </sap:WorkflowViewStateService.ViewState>
-                      </Sequence>
-                    </TryCatch.Finally>
-                  </TryCatch>
-                  <ui:SetTransactionStatus ContinueOnError="{x:Null}" Reason="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Set Transaction Status" ErrorType="Business" sap:VirtualizedContainerService.HintSize="451.2,165.6" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_1" Status="Successful" TransactionItem="[currentTransactionItem]">
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SendEmail - Invoke Workflow File (SubProcesses\SendEmail.xaml)" sap:VirtualizedContainerService.HintSize="416,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="SubProcesses\SendEmail.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_Owner">[CurrentRow("email").ToString]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_EmailSubject">["Billr Email Reminder: " +CurrentRow("BillName").ToString]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_BillTitle">[CurrentRow("BillName").ToString]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_DueDate">[DateTime.now.Month.ToString +"/" + CurrentRow("due_day").ToString + "/" + DateTime.now.Year.ToString]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_Username">[CurrentRow("username").ToString]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_BillAmount">[CurrentRow("Amount").ToString]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_BillCategory">[CurrentRow("Category").ToString]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:SetTransactionStatus ContinueOnError="{x:Null}" Reason="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Set Transaction Status" ErrorType="Application" sap:VirtualizedContainerService.HintSize="416,165.6" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_3" Status="Successful" TransactionItem="[currentTransactionItem]">
                     <ui:SetTransactionStatus.Analytics>
                       <scg:Dictionary x:TypeArguments="x:String, InArgument" />
                     </ui:SetTransactionStatus.Analytics>
@@ -318,23 +188,46 @@
                     </ui:SetTransactionStatus.Output>
                   </ui:SetTransactionStatus>
                 </Sequence>
-              </If.Then>
-              <If.Else>
-                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="484.8,400" sap2010:WorkflowViewState.IdRef="Sequence_6">
+              </TryCatch.Try>
+              <TryCatch.Catches>
+                <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                  <ActivityAction x:TypeArguments="s:Exception">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                    </ActivityAction.Argument>
+                    <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="449.6,400" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:SetTransactionStatus ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Set Transaction Status" ErrorType="Application" sap:VirtualizedContainerService.HintSize="416,226.4" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_2" Reason="[exception.Message]" Status="Failed" TransactionItem="[currentTransactionItem]">
+                        <ui:SetTransactionStatus.Analytics>
+                          <scg:Dictionary x:TypeArguments="x:String, InArgument" />
+                        </ui:SetTransactionStatus.Analytics>
+                        <ui:SetTransactionStatus.Output>
+                          <scg:Dictionary x:TypeArguments="x:String, InArgument" />
+                        </ui:SetTransactionStatus.Output>
+                      </ui:SetTransactionStatus>
+                      <Throw Exception="[New Exception(exception.message)]" sap:VirtualizedContainerService.HintSize="416,113.6" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                    </Sequence>
+                  </ActivityAction>
+                </Catch>
+              </TryCatch.Catches>
+              <TryCatch.Finally>
+                <Sequence DisplayName="Finally" sap:VirtualizedContainerService.HintSize="449.6,89.6" sap2010:WorkflowViewState.IdRef="Sequence_13">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="451.2,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;Amount of days til Bill Date: &quot; + billDate.Subtract(DateTime.Now).Days.ToString + vbCrLf + &quot;Bill Date: &quot; + billDate.ToString(&quot;MM-dd-yyyy&quot;)]" />
-                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="451.2,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Bill &quot;+ CurrentRow.Item(&quot;Bill&quot;).ToString + &quot; is not within 3 days...&quot;]" />
                 </Sequence>
-              </If.Else>
-            </If>
+              </TryCatch.Finally>
+            </TryCatch>
           </Sequence>
         </ActivityAction>
       </ui:ForEachRow.Body>
     </ui:ForEachRow>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="521.6,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Bill Reminder Process Ending...&quot;]" />
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="486.4,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Bill Reminder Process Ending...&quot;]" />
   </Sequence>
 </Activity>

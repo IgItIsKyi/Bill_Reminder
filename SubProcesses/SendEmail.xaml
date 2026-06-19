@@ -1,8 +1,12 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="SendEmail" this:SendEmail.in_Owner="[{&quot;chandlerkyiem4@gmail.com&quot;}]" this:SendEmail.in_EmailSubject="Test" this:SendEmail.in_EmailBody="This is a test" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:umam="clr-namespace:UiPath.MicrosoftOffice365.Activities.Mail;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:umame="clr-namespace:UiPath.MicrosoftOffice365.Activities.Mail.Enums;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:umamm="clr-namespace:UiPath.MicrosoftOffice365.Activities.Mail.Models;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:usau="clr-namespace:UiPath.Shared.Activities.Utils;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="SendEmail" this:SendEmail.in_Username="Kyi" this:SendEmail.in_DueDate="6/19/2027" this:SendEmail.in_BillTitle="OnlyToes Subscription" this:SendEmail.in_Owner="chandlerkyiem4@gmail.com" this:SendEmail.in_EmailSubject="Test" this:SendEmail.in_BillAmount="100.99" this:SendEmail.in_BillCategory="Subscriptions" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:umam="clr-namespace:UiPath.MicrosoftOffice365.Activities.Mail;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:umame="clr-namespace:UiPath.MicrosoftOffice365.Activities.Mail.Enums;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:umamm="clr-namespace:UiPath.MicrosoftOffice365.Activities.Mail.Models;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:usau="clr-namespace:UiPath.Shared.Activities.Utils;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_Owner" Type="InArgument(scg:IEnumerable(x:String))" />
+    <x:Property Name="in_Username" Type="InArgument(x:String)" />
+    <x:Property Name="in_DueDate" Type="InArgument(x:String)" />
+    <x:Property Name="in_BillTitle" Type="InArgument(x:String)" />
+    <x:Property Name="in_Owner" Type="InArgument(x:String)" />
     <x:Property Name="in_EmailSubject" Type="InArgument(x:String)" />
-    <x:Property Name="in_EmailBody" Type="InArgument(x:String)" />
+    <x:Property Name="in_BillAmount" Type="InArgument(x:String)" />
+    <x:Property Name="in_BillCategory" Type="InArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
@@ -45,6 +49,7 @@
       <x:String>UiPath.Shared.Activities.ConnectionService.Contracts</x:String>
       <x:String>UiPath.MicrosoftOffice365.Activities</x:String>
       <x:String>System.Reflection</x:String>
+      <x:String>System.Numerics</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -94,16 +99,151 @@
       <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities</AssemblyReference>
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="SendEmail" sap:VirtualizedContainerService.HintSize="1409.2,802.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="SendEmail" sap:VirtualizedContainerService.HintSize="719.6,2372" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="emailDivider">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">&lt;tr&gt;&lt;td style="background-color:#FFFDF8;padding:0 36px;" class="dm-card"&gt;&lt;table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"&gt;&lt;tr&gt;&lt;td class="dm-divider" style="border-top:1px solid #E2DDD4;font-size:0;line-height:0;"&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="emailCTA">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">&lt;tr&gt;&lt;td class="body-pad dm-card" style="background-color:#FFFDF8;padding:24px 36px 28px;"&gt;&lt;table role="presentation" border="0" cellpadding="0" cellspacing="0"&gt;&lt;tr&gt;&lt;td&gt;&lt;a href="http://100.91.124.42:8100/" target="_blank"style="display:inline-block;background-color:#2D5016;color:#ffffff;font-family:'Trebuchet MS',Helvetica,sans-serif;font-size:14px;font-weight:600;text-decoration:none;padding:13px 30px;border-radius:9px;letter-spacing:0.2px;"&gt;View Dashboard &amp;rarr;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="emailCategoryPill">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">&lt;table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"&gt;&lt;tr&gt;&lt;td style="height:20px;"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" class="dm-inner" style="background-color:#F5F2EC;border:1px solid #E2DDD4;border-radius:10px;"&gt;&lt;tr&gt;&lt;td style="padding:14px 18px;"&gt;&lt;table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"&gt;&lt;tr&gt;&lt;td valign="middle"&gt;&lt;span style="display:inline-block;background-color:#E2DDD4;color:#9A9080;font-family:'Trebuchet MS',Helvetica,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;padding:3px 10px;border-radius:4px;"&gt;#BillCategory#&lt;/span&gt;&lt;span style="font-family:'Trebuchet MS',Helvetica,sans-serif;font-size:13px;color:#9A9080;margin-left:10px;" class="dm-muted"&gt;#BillTitle#&lt;/span&gt;&lt;/td&gt;&lt;td align="right" valign="middle"&gt;&lt;span style="font-family:Georgia,'Times New Roman',Times,serif;font-size:22px;color:#1A1814;letter-spacing:-0.5px;" class="dm-amount"&gt;$#BillAmount#&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="emailTimeLeftCard">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">&lt;td width="48%" valign="top" class="stat-stack"&gt;&lt;table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" class="dm-inner" style="background-color:#F5F2EC;border:1px solid #E2DDD4;border-radius:10px;"&gt;&lt;tr&gt;&lt;td style="padding:16px 18px;"&gt;&lt;p style="margin:0 0 4px;font-family:'Trebuchet MS',Helvetica,sans-serif;font-size:10px;color:#9A9080;letter-spacing:0.7px;text-transform:uppercase;" class="dm-muted"&gt;Time Left&lt;/p&gt;&lt;p style="margin:0;font-family:Georgia,'Times New Roman',Times,serif;font-size:32px;color:#2D5016;letter-spacing:-1px;line-height:1;"&gt;#DaysUntil#&lt;/p&gt;&lt;p style="margin:2px 0 0;font-family:'Trebuchet MS',Helvetica,sans-serif;font-size:12px;color:#9A9080;" class="dm-muted"&gt;days remaining&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="emailDetailCard">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">&lt;table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"&gt;&lt;tr&gt;&lt;td width="48%" valign="top" class="stat-stack" style="padding-right:8px;"&gt;&lt;table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" class="dm-inner" style="background-color:#F5F2EC;border:1px solid #E2DDD4;border-radius:10px;"&gt;&lt;tr&gt;&lt;td style="padding:16px 18px;"&gt;&lt;p style="margin:0 0 4px;font-family:'Trebuchet MS',Helvetica,sans-serif;font-size:10px;color:#9A9080;letter-spacing:0.7px;text-transform:uppercase;" class="dm-muted"&gt;Due Date&lt;/p&gt;&lt;p style="margin:0;font-family:Georgia,'Times New Roman',Times,serif;font-size:20px;color:#1A1814;letter-spacing:-0.3px;" class="dm-text"&gt;#BillDueDate#&lt;/p&gt;&lt;p style="margin:4px 0 0;font-family:'Trebuchet MS',Helvetica,sans-serif;font-size:12px;color:#9A9080;" class="dm-muted"&gt;day #BillDay# of the month&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="emailGreeting">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">&lt;tr&gt;&lt;td class="body-pad dm-card" style="background-color:#FFFDF8;padding:28px 36px 8px;"&gt;&lt;p style="margin:0 0 20px;font-family:'Trebuchet MS',Helvetica,sans-serif;font-size:15px;color:#1A1814;line-height:1.6;" class="dm-text"&gt;Hey &lt;strong&gt;#Username#&lt;/strong&gt;, just a heads up —your &lt;strong&gt;#BillTitle#&lt;/strong&gt; payment of &lt;strong&gt;$#BillAmount#&lt;/strong&gt; is coming up. Here are the details:&lt;/p&gt;</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="emailArchTransition">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">&lt;tr&gt;&lt;td style="background-color:#2D5016;padding:0;line-height:0;"&gt;&lt;table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#FFFDF8;border-radius:14px 14px 0 0;" class="dm-card"&gt;&lt;tr&gt;&lt;td style="height:6px;"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="emailBigBillAmount">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">&lt;p class="hero-amount" style="margin:0;font-family:Georgia,'Times New Roman',Times,serif;font-size:58px;color:#ffffff;letter-spacing:-2px;line-height:1;"&gt;#BillAmount#&lt;/p&gt;&lt;p style="margin:6px 0 0;font-family:'Trebuchet MS',Helvetica,sans-serif;font-size:12px;color:rgba(255,255,255,0.5);letter-spacing:0.4px;"&gt;due on #BillDueDate#&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="emailBigBillName">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">&lt;p style="margin:0 0 6px;font-family:'Trebuchet MS',Helvetica,sans-serif;font-size:12px;color:rgba(255,255,255,0.55);letter-spacing:1px;text-transform:uppercase;"&gt;Bill Reminder&lt;/p&gt;&lt;p style="margin:0 0 4px;font-family:Georgia,'Times New Roman',Times,serif;font-size:34px;color:#ffffff;letter-spacing:-1px;line-height:1.1;"&gt;#BillTitle#&lt;/p&gt;&lt;p style="margin:0 0 28px;font-family:'Trebuchet MS',Helvetica,sans-serif;font-size:13px;color:rgba(255,255,255,0.55);"&gt;#BillCategory#&lt;/p&gt;</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="emailTableStart">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">&lt;table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" class="dm-bg" style="background-color:#F5F2EC;"&gt;&lt;tr&gt;&lt;td align="center" style="padding:32px 16px;"&gt; &lt;table role="presentation" border="0" cellpadding="0" cellspacing="0" width="560" class="email-container dm-card" style="max-width:560px;background-color:#FFFDF8;border-radius:16px;overflow:hidden;box-shadow:0 4px 32px rgba(26,24,20,0.12);"&gt;&lt;tr&gt;&lt;td class="hero-pad" style="background-color:#2D5016;padding:40px 36px 32px;"&gt;&lt;table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"&gt;&lt;tr&gt;&lt;td valign="middle"&gt;&lt;span style="font-family:Georgia,'Times New Roman',Times,serif;font-size:22px;color:#ffffff;letter-spacing:-0.5px;"&gt;Billr.&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"&gt;&lt;tr&gt;&lt;td style="height:28px;"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="emailPreviewText">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">&lt;body style="margin:0;padding:0;background-color:#F5F2EC;" class="dm-bg"&gt;&lt;div style="display:none;max-height:0;overflow:hidden;font-size:1px;color:#F5F2EC;"&gt; #BillTitle# — $#BillAmount# — is due on #BillDueDate#.&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&amp;nbsp;‌&lt;/div&gt;</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="emailCodeBottom">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String" xml:space="preserve">&lt;tr&gt;&lt;td style="background-color:#FFFDF8;padding:0 36px;" class="dm-card"&gt;&lt;table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"&gt;&lt;tr&gt;&lt;td class="dm-divider" style="border-top:1px solid #E2DDD4;font-size:0;line-height:0;"&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;!-- ── FOOTER ── --&gt;&lt;tr&gt;&lt;td class="footer-pad dm-inner" style="background-color:#F5F2EC;padding:20px 36px 24px;border-radius:0 0 16px 16px;"&gt;&lt;table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"&gt;&lt;tr&gt;&lt;td&gt;&lt;p style="margin:0 0 6px;font-family:Georgia,'Times New Roman',Times,serif;font-size:15px;color:#2D5016;letter-spacing:-.3px;"&gt;Billr.&lt;/p&gt; &lt;p style="margin:0;font-family:'Trebuchet MS',Helvetica,sans-serif;font-size:11px;color:#9A9080;line-height:1.7;" class="dm-muted"&gt; You're receiving this reminder because notifications are enabled for your account.&lt;br/&gt; &amp;copy; 2026 Billr &amp;nbsp;&amp;middot;&amp;nbsp;&lt;a href="http://100.91.124.42:8100/" style="color:#9A9080;text-decoration:underline;"&gt;Notification settings&lt;/a&gt; &amp;nbsp;&amp;middot;&amp;nbsp; &lt;/p&gt; &lt;/td&gt; &lt;/tr&gt; &lt;/table&gt; &lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;   &lt;/td&gt;&lt;/tr&gt; &lt;/table&gt; &lt;/body&gt; &lt;/html&gt;</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="emailCodeTop">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String" xml:space="preserve">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;&lt;html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en"&gt;&lt;head&gt;  &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt; &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt; &lt;meta name="x-apple-disable-message-reformatting" /&gt; &lt;meta name="format-detection" content="telephone=no, Date=no, address=no, email=no" /&gt; &lt;!--[if mso]&gt; &lt;noscript&gt;&lt;xml&gt;&lt;o:OfficeDocumentSettings&gt;&lt;o:PixelsPerInch&gt;96&lt;/o:PixelsPerInch&gt;&lt;/o:OfficeDocumentSettings&gt;&lt;/xml&gt;&lt;/noscript&gt; &lt;![endif]--&gt; &lt;title&gt;Billr — {{BILL_TITLE}} is due {{URGENCY_LABEL}}&lt;/title&gt; &lt;style type="text/css"&gt; body,table,td,a{-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%} table,td{mso-table-lspace:0pt;mso-table-rspace:0pt}    img{-ms-interpolation-mode:bicubic;border:0;outline:none;text-decoration:none}    body{margin:0!important;padding:0!important;width:100%!important}    a[x-apple-data-detectors]{color:inherit!important;text-decoration:none!important}     @media only screen and (max-width:600px){      .email-container{width:100%!important;max-width:100%!important}      .hero-amount{font-size:48px!important;letter-spacing:-1px!important}      .hero-pad{padding:32px 20px 28px!important}      .body-pad{padding:24px 20px!important}      .stat-stack{display:block!important;width:100%!important;margin-bottom:10px!important}      .footer-pad{padding:18px 20px!important}    }     /* Dark mode — standard */    @media (prefers-color-scheme:dark){      .dm-bg    {background-color:#0F0F0D!important}      .dm-card  {background-color:#1A1916!important}      .dm-inner {background-color:#222018!important}      .dm-text  {color:#F0EDE6!important}      .dm-muted {color:#6B6658!important}      .dm-bdr   {border-color:#2C2A26!important}      .dm-divider{border-top-color:#2C2A26!important}      .dm-amount{color:#F0EDE6!important}    }    /* Dark mode — Outlook.com */    [data-ogsc] .dm-bg    {background-color:#0F0F0D!important}    [data-ogsc] .dm-card  {background-color:#1A1916!important}    [data-ogsc] .dm-inner {background-color:#222018!important}    [data-ogsc] .dm-text  {color:#F0EDE6!important}    [data-ogsc] .dm-muted {color:#6B6658!important}    [data-ogsc] .dm-bdr   {border-color:#2C2A26!important}    [data-ogsc] .dm-amount{color:#F0EDE6!important}  &lt;/style&gt;&lt;/head&gt;</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="daysUntil" />
+      <Variable x:TypeArguments="x:String" Default="[(Convert.ToDateTime(in_DueDate).Day).ToString()]" Name="day" />
+    </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="449.6,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Starting SendEmail Process...&quot;]" />
-    <umam:SendMailConnections ArgumentAttachmentPaths="{x:Null}" AttachmentList="{x:Null}" AttachmentPaths="{x:Null}" Attachments="{x:Null}" Bcc="{x:Null}" Cc="{x:Null}" ConnectionAccountName="{x:Null}" ContinueOnError="{x:Null}" Mailbox="{x:Null}" MailboxBackup="{x:Reference __ReferenceID0}" ReplyTo="{x:Null}" TextBody="{x:Null}" AttachmentInputMode="Existing" AuthScopesInvalid="False" Body="[in_EmailBody]" ConnectionId="22a8fb90-6990-4af2-bbe6-a670d0e05965" DisplayName="Send Email" sap:VirtualizedContainerService.HintSize="449.6,439.2" sap2010:WorkflowViewState.IdRef="SendMailConnections_1" Importance="Normal" InputType="HTML" SaveAsDraft="False" Subject="[in_EmailSubject]" To="[in_Owner]" UseConnectionService="True" UseSharedMailbox="False">
+    <Assign sap:VirtualizedContainerService.HintSize="449.6,174.4" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[emailPreviewText]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[emailPreviewText.Replace("#BillTitle#", in_BillTitle).Replace("#BillDueDate#", in_DueDate).Replace("#BillAmount#", in_BillAmount)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="449.6,174.4" sap2010:WorkflowViewState.IdRef="Assign_2">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[emailBigBillName]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[emailBigBillName.Replace("#BillTitle#", in_BillTitle).Replace("#BillCategory#", in_BillCategory)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="449.6,174.4" sap2010:WorkflowViewState.IdRef="Assign_3">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[emailBigBillAmount]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[emailBigBillAmount.Replace("#BillAmount#", in_BillAmount).Replace("#BillDueDate#", in_DueDate)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="449.6,174.4" sap2010:WorkflowViewState.IdRef="Assign_4">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[emailGreeting]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[emailGreeting.Replace("#BillTitle#", in_BillTitle).Replace("#BillAmount#", in_BillAmount).Replace("#Username#", in_Username)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="449.6,174.4" sap2010:WorkflowViewState.IdRef="Assign_5">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[emailDetailCard]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[emailDetailCard.Replace("#BillDay#", day).Replace("#BillDueDate#", in_DueDate)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="449.6,174.4" sap2010:WorkflowViewState.IdRef="Assign_7">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[daysUntil]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[(Convert.ToDateTime(in_DueDate).Day - datetime.Now.Day).ToString()]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="449.6,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Days Until: &quot; + daysUntil]" />
+    <Assign sap:VirtualizedContainerService.HintSize="449.6,174.4" sap2010:WorkflowViewState.IdRef="Assign_6">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[emailTimeLeftCard]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[emailTimeLeftCard.Replace("#DaysUntil#", daysUntil)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="449.6,174.4" sap2010:WorkflowViewState.IdRef="Assign_8">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[emailCategoryPill]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[emailCategoryPill.Replace("#BillCategory#", in_BillCategory).Replace("#BillTitle#", in_BillTitle).Replace("#BillAmount#", in_BillAmount)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <umam:SendMailConnections ArgumentAttachmentPaths="{x:Null}" AttachmentList="{x:Null}" AttachmentPaths="{x:Null}" Attachments="{x:Null}" Bcc="{x:Null}" Cc="{x:Null}" ConnectionAccountName="{x:Null}" ContinueOnError="{x:Null}" Mailbox="{x:Null}" MailboxBackup="{x:Reference __ReferenceID0}" ReplyTo="{x:Null}" TextBody="{x:Null}" AttachmentInputMode="Existing" AuthScopesInvalid="False" Body="[emailCodeTop + emailPreviewText + emailTableStart + emailArchTransition + emailGreeting + emailDetailCard + emailTimeLeftCard + emailCategoryPill + emailCTA +  emailDivider + emailCodeBottom]" ConnectionId="22a8fb90-6990-4af2-bbe6-a670d0e05965" DisplayName="Send Email" sap:VirtualizedContainerService.HintSize="449.6,439.2" sap2010:WorkflowViewState.IdRef="SendMailConnections_1" Importance="Normal" InputType="HTML" SaveAsDraft="False" Subject="[in_EmailSubject]" To="[{in_Owner}]" UseConnectionService="True" UseSharedMailbox="False">
       <umam:SendMailConnections.AttachmentsBackup>
         <usau:BackupSlot x:TypeArguments="umame:AttachmentInputMode" StoredValue="Existing">
           <usau:BackupSlot.BackupValues>
